@@ -1,0 +1,15 @@
+import type {Question} from './types';
+const q=(id:string,grade:string,category:Question['category'],question:string,answer:string,choices:string[],explanation:string,kanji:string[],similar:Question['similar']):Question=>({id,grade,category,question,answer,choices,explanation,kanji,difficulty:1,sourceTag:'学習指導要領・漢検級別練習',similar});
+export const questions:Question[]=[
+q('k6-r-001','6級','読み','「責任」の読みをひらがなで書こう。','せきにん',['せきにん','せいにん','せきじん'],'責任は、自分が引き受ける役目のことです。',['責','任'],{category:'読み',question:'「任せる」の読みをひらがなで書こう。',answer:'まかせる',choices:['まかせる','にんせる','まもせる'],explanation:'「任」は「まか（せる）」とも読みます。',kanji:['任'],difficulty:1,sourceTag:'別熟語'}),
+q('k6-w-001','6級','書き','「しょうにんを受ける」の「しょうにん」を漢字で書こう。','承認',['承認','証人','商人'],'承認は、よいと認めることです。',['承','認'],{category:'書き',question:'「計画をしょうにんする」の「しょうにん」を漢字で書こう。',answer:'承認',choices:['承認','証人','商人'],explanation:'意味が「認める」なので承認です。',kanji:['承','認'],difficulty:1,sourceTag:'別短文'}),
+q('k6-b-001','6級','部首','「湖」の部首はどれ？','さんずい',['さんずい','きへん','ごんべん'],'湖は水に関係するので、部首はさんずいです。',['湖'],{category:'部首',question:'「港」の部首はどれ？',answer:'さんずい',choices:['さんずい','てへん','くさかんむり'],explanation:'港も水に関係する漢字です。',kanji:['港'],difficulty:1,sourceTag:'同じ部首'}),
+q('k6-o-001','6級','送り仮名','正しい送り仮名を選ぼう。「あたたかい」','暖かい',['暖かい','暖い','暖たかい'],'「暖」の後に「かい」を送ります。',['暖'],{category:'送り仮名',question:'正しい送り仮名を選ぼう。「あたためる」',answer:'暖める',choices:['暖める','暖ためる','暖る'],explanation:'同じ「暖」を使う活用です。',kanji:['暖'],difficulty:1,sourceTag:'同じ活用'}),
+q('k6-h-001','6級','同音異字','長さを（　）。意味に合うものを選ぼう。','測る',['測る','計る','量る'],'長さや高さは「測る」を使います。',['測','計','量'],{category:'同音異字',question:'時間を（　）。意味に合うものを選ぼう。',answer:'計る',choices:['測る','計る','量る'],explanation:'時間や計画には「計る」を使います。',kanji:['測','計','量'],difficulty:2,sourceTag:'意味比較'}),
+q('k6-s-001','6級','熟語','「左右」の熟語の組み立てはどれ？','反対の意味',['反対の意味','似た意味','上の字が下の字を説明'],'左と右は反対の意味を持つ漢字です。',['左','右'],{category:'熟語',question:'「上下」の熟語の組み立てはどれ？',answer:'反対の意味',choices:['反対の意味','似た意味','動作と目的'],explanation:'上と下は反対の意味です。',kanji:['上','下'],difficulty:1,sourceTag:'同じ構成'}),
+q('k4-r-001','4級','読み','「貢献」の読みをひらがなで書こう。','こうけん',['こうけん','こうこん','くけん'],'貢献は、人や社会の役に立つことです。',['貢','献'],{category:'読み',question:'「献立」の読みをひらがなで書こう。',answer:'こんだて',choices:['こんだて','けんりつ','こうだて'],explanation:'「献」は熟語によって読みが変わります。',kanji:['献'],difficulty:2,sourceTag:'別熟語'}),
+q('k4-e-001','4級','誤字訂正','「係員の指事に従う」の誤字を直そう。','指示',['指示','指事','支持'],'知らせて示すことなので「指示」です。',['指','示'],{category:'誤字訂正',question:'「先生の指図にしたがう」の下線部と近い意味の熟語を選ぼう。',answer:'指示',choices:['指示','支持','私事'],explanation:'行動を教える意味は「指示」です。',kanji:['指','示'],difficulty:2,sourceTag:'別文'}),
+q('k4-y-001','4級','四字熟語','「試行（　）誤」に入る漢字は？','錯',['錯','作','策'],'試行錯誤は、試して間違いを直しながら進むことです。',['試','行','錯','誤'],{category:'四字熟語',question:'「暗中（　）索」に入る漢字は？',answer:'模',choices:['模','暮','幕'],explanation:'暗中模索は、手がかりがない中で探すことです。',kanji:['暗','中','模','索'],difficulty:2,sourceTag:'四字熟語'}),
+q('k4-t-001','4級','対義語・類義語','「拡大」の反対の意味の熟語は？','縮小',['縮小','増大','広大'],'大きくする拡大の反対は、小さくする縮小です。',['拡','大','縮','小'],{category:'対義語・類義語',question:'「増加」の反対の意味の熟語は？',answer:'減少',choices:['減少','追加','上昇'],explanation:'増えることの反対は減ることです。',kanji:['増','加','減','少'],difficulty:1,sourceTag:'対義語'})
+];
+export const grades=['10級','9級','8級','7級','6級','5級','4級','3級'];
