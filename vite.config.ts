@@ -1,0 +1,2 @@
+import {defineConfig} from 'vite';import react from '@vitejs/plugin-react';import {VitePWA} from 'vite-plugin-pwa';
+export default defineConfig({base:'/Kanji/',plugins:[react(),VitePWA({registerType:'prompt',includeAssets:[],manifest:{name:'まいにち漢字トレーニング',short_name:'漢字トレ',theme_color:'#176b5b',background_color:'#fffaf0',display:'standalone',start_url:'/Kanji/'},workbox:{navigateFallback:'/Kanji/index.html'}})]});
