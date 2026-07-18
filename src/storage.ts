@@ -1,7 +1,7 @@
 import type {Store,StudyRecord,AnswerLog} from './types';
 export const KEY='kanji-study-v1';
 export const localDate=(d=new Date())=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`};
-export const emptyStore=():Store=>({version:1,settings:{grade:'6級',examDate:'',dailyLimitMinutes:45},records:[],importedIds:[]});
+export const emptyStore=():Store=>({version:1,settings:{grade:'6級',examDate:'',dailyLimitMinutes:45,courseMode:'kanken',schoolGrade:'小学5年'},records:[],importedIds:[]});
 export function migrate(raw:unknown):Store{try{const x=typeof raw==='string'?JSON.parse(raw):raw as any;if(!x||typeof x!=='object')return emptyStore();const base=emptyStore();const records=Array.isArray(x.records)?x.records.filter((r:any)=>r&&r.id&&Number.isFinite(r.total)).map((r:any)=>({...r,version:1,steps:r.steps??[true,true,true,true,true],answers:r.answers??[]})):[];return {...base,...x,version:1,settings:{...base.settings,...x.settings},records:[...new Map(records.map((r:StudyRecord)=>[r.id,r])).values()]}}catch{return emptyStore()}}
 export function load():Store{return migrate(localStorage.getItem(KEY)||sessionStorage.getItem(KEY))}
 export function save(s:Store){try{localStorage.setItem(KEY,JSON.stringify(s));return 'local'}catch{try{sessionStorage.setItem(KEY,JSON.stringify(s));return 'session'}catch{return 'failed'}}}
