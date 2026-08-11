@@ -19,7 +19,7 @@ export function coverage(grade:string,bank:Question[]){
 
 export function readiness(grade:string,bank:Question[],records:StudyRecord[]){
  const spec=examSpecs[grade],c=coverage(grade,bank),mocks=records.filter(r=>r.grade===`漢検${grade}`&&r.mock),recent=records.filter(r=>r.grade===`漢検${grade}`).slice(-10),logs:AnswerLog[]=recent.flatMap(r=>r.answers),byCategory=spec.categories.map(category=>{const a=logs.filter(x=>x.category===category);return{category,total:a.length,rate:a.length?Math.round(a.filter(x=>x.correct).length/a.length*100):null}}),weak=byCategory.filter(x=>x.rate===null||x.rate<spec.pass),lastMocks=mocks.slice(-2),mockRate=lastMocks.length?Math.round(lastMocks.reduce((n,r)=>n+r.correct,0)/lastMocks.reduce((n,r)=>n+r.total,0)*100):null;
- const bankReady=c.missing.length===0&&c.characters>=Math.min(spec.characters,80)&&c.questions>=50;
+ const bankReady=c.missing.length===0&&c.characters>=spec.characters&&c.questions>=50;
  const evidenceReady=lastMocks.length>=2&&byCategory.every(x=>x.total>=3)&&mockRate!==null;
  const passed=bankReady&&evidenceReady&&mockRate!>=spec.pass&&weak.length===0;
  const reason=!bankReady?'この級の教材範囲がまだ十分ではありません':lastMocks.length<2?`判定には模試があと${2-lastMocks.length}回必要です`:!evidenceReady?'すべての分野をあと3問ずつ確認します':passed?'合格点に届く力が安定しています':'合格点まで、苦手分野を復習しましょう';
