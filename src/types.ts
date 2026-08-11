@@ -3,4 +3,4 @@ export interface Question{id:string;grade:string;category:Category;question:stri
 export interface AnswerLog{questionId:string;category:Category;kanji:string[];correct:boolean;at:string;mode:'daily'|'mini'|'full'}
 export interface StudyRecord{version:1;id:string;date:string;completedAt:string;durationMinutes:number;grade:string;activity:string;correct:number;total:number;learnedKanji:string[];masteredKanji:string[];wrongKanji:string[];strengths:string[];weaknesses:string[];nextAction:string;steps:boolean[];answers:AnswerLog[];mock?:'mini'|'full'}
 export interface Settings{grade:string;examDate:string;dailyLimitMinutes:number;courseMode:'kanken'|'school';schoolGrade:string;schoolTerm:1|2|3}
-export interface Store{version:1;settings:Settings;records:StudyRecord[];draft?:{index:number;answers:AnswerLog[];startedAt:string};importedIds:string[]}
+export interface Store{version:1;settings:Settings;records:StudyRecord[];draft?:{index:number;answers:AnswerLog[];startedAt:string;feedback?:string;input?:string};importedIds:string[]}
