@@ -31,6 +31,23 @@ describe('回答・再開・コース変更',()=>{
   const s=JSON.parse(localStorage.getItem(KEY)!);expect(s.draft.questionIds.every((id:string)=>questions.find(q=>q.id===id)?.grade==='10級')).toBe(true);
  });
  it('習得マップに中3の教科書一覧の全241字を表示する',()=>{
-  const s=emptyStore();s.settings.schoolGrade='中学3年';localStorage.setItem(KEY,JSON.stringify(s));render(<App/>);click('できる漢字を見る　›');expect(screen.getByLabelText('241字中0字習得')).toBeTruthy();
+  const s=emptyStore();s.settings.schoolGrade='中学3年';s.settings.courseMode='school';localStorage.setItem(KEY,JSON.stringify(s));render(<App/>);click('できる漢字を見る　›');expect(screen.getByLabelText('241字中0字習得')).toBeTruthy();
+ });
+});
+
+describe('直感的な学習導線',()=>{
+ it('Enterで回答でき、日本語変換中のEnterでは確定しない',()=>{
+  const initial=emptyStore();initial.settings.courseMode='school';initial.settings.schoolGrade='中学3年';localStorage.setItem(KEY,JSON.stringify(initial));
+  render(<App/>);click('きょうの5問をはじめる');const state=JSON.parse(localStorage.getItem(KEY)!);const q=questions.find(q=>q.id===state.draft.questionIds[0])!;
+  const input=screen.getByRole('textbox',{name:'答え'});fireEvent.change(input,{target:{value:q.answer}});fireEvent.keyDown(input,{key:'Enter',isComposing:true,keyCode:229});expect(screen.queryByText('○ 正解')).toBeNull();
+  fireEvent.keyDown(input,{key:'Enter',keyCode:13});expect(screen.getByText('○ 正解')).toBeTruthy();expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe('1');
+ });
+ it('学校ページで学年を選ぶ前に別コースの開始ボタンを表示しない',()=>{
+  render(<App/>);click('学校の学年からえらぶ');expect(screen.queryByRole('button',{name:'この学年で今日の学習をはじめる'})).toBeNull();
+  fireEvent.click(screen.getByRole('button',{name:/^中学3年/}));expect(screen.getByRole('button',{name:'この学期の漢字をはじめる'})).toBeTruthy();
+ });
+ it('設定は保存を押したときに反映し、メニューから戻れる',()=>{
+  render(<App/>);click('メニュー');click('試験日と時間の設定');fireEvent.change(screen.getByLabelText('1日で学ぶ時間（分）'),{target:{value:'20'}});
+  expect(JSON.parse(localStorage.getItem(KEY)||JSON.stringify(emptyStore())).settings.dailyLimitMinutes).toBe(45);click('✓ 保存してもどる');expect(JSON.parse(localStorage.getItem(KEY)!).settings.dailyLimitMinutes).toBe(20);
  });
 });
